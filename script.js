@@ -1,48 +1,60 @@
 const listeMots = ["Cachalot","Pétunia","Serviette"];
+const listePhrases = ["Pas de panique !", "La vie, l'univers et le reste", "Merci pour le poisson"];
 let score = 0;
+let i = 0;
+let w = 0
 
-let motUtilisateur =  prompt("Entrez le mot :" + listeMots[0]);
+while (w < 1){
+    let choix = prompt("Une liste de mots ou de phrase? Veuillez écrire 'mots' ou 'phrases'");
 
-    
-if(motUtilisateur === listeMots[0]){
-    score++;
-
-    console.log("Bravo !");
-    console.log("Votre score est de : " +score);
-
-    } 
-    else {
-    console.log("Erreur de frappe");
-
+    if (choix === "mots"){
+        while (i < 3){
+            let motUtilisateur =  prompt("Entrez le mot :" + listeMots[i]);
+        
+            if(motUtilisateur === listeMots[i]){
+            score++;
+        
+            console.log("Bravo !");
+            
+        
+            } 
+            else {
+            console.log("Erreur de frappe");
+        
+            }
+        
+            i++;
+        }
+        
+        console.log("Votre score est de : " +score+" sur 3");
+        w++;
     }
 
-    motUtilisateur =  prompt("Entrez le mot :" + listeMots[1]);
-
-    
-if(motUtilisateur === listeMots[1]){
-    score++;
-
-    console.log("Bravo !");
-    console.log("Votre score est de : " +score);
-
-    } 
-    else {
-    console.log("Erreur de frappe");
-
+    if (choix === "phrases"){
+        while (i < 3){
+            let motUtilisateur =  prompt("Entrez le mot :" + listePhrases[i]);
+        
+            if(motUtilisateur === listePhrases[i]){
+            score++;
+        
+            console.log("Bravo !");
+            
+        
+            } 
+            else {
+            console.log("Erreur de frappe");
+        
+            }
+        
+            i++;
+        }
+        
+        console.log("Votre score est de : " +score+" sur 3");
+        w++;
     }
 
-    motUtilisateur =  prompt("Entrez le mot :" + listeMots[2]);
-
-    
-if(motUtilisateur === listeMots[2]){
-    score++;
-
-    console.log("Bravo !");
-    console.log("Votre score est de : " +score);
-    
-    } 
     else {
-    console.log("Erreur de frappe");
-    
+        console.log("Veuillez choisir une liste de most ou de phrases.");
+
     }
-    
+}
