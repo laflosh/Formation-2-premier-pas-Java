@@ -14,32 +14,43 @@ let inputEcriture = document.getElementById("inputEcriture");
 function lancerJeu() {
     // Initialisations
     let score = 0;
-
+    let listeProposition = listeMots
     let i = 0;
 
     let btnValide = document.getElementById("btnValiderMot");
     let inputEcriture = document.getElementById("inputEcriture");
 
-    motsAfficher(listeMots[i]);
+    motsAfficher(listeProposition[i]);
     btnValide.addEventListener("click", () =>{
         console.log(inputEcriture.value)
-        if(inputEcriture.value === listeMots[i]){
+        if(inputEcriture.value === listeProposition[i]){
             score ++;
         }
         i ++;
         afficherResultat(score, i);
 
-        if(listeMots[i] === undefined){
+        if(listeProposition[i] === undefined){
             motsAfficher("Le jeu est finis.");
             btnValide.disabled = true;
 
         } else{
-            motsAfficher(listeMots[i]);
+            motsAfficher(listeProposition[i]);
         }
 
         afficherResultat(score, i);
     });
 
+    let listeInputRadio = document.querySelectorAll(".optionSource input");
+        for (let index = 0; index < listeInputRadio.length; index++) {
+            listeInputRadio[index].addEventListener("change",(event) =>{
+                if(event.target.value === "1"){
+                    listeProposition = listeMots
+                } else {
+                    listeProposition = listePhrases
+                }
+                motsAfficher(listeProposition[i]);
+            })
+        }
 
 }
 
