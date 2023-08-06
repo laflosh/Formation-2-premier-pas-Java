@@ -89,5 +89,12 @@ function choisirPhraseOuMots(){
 }
 
 function afficherResultat(score, nombreQuestion){
-    console.log("Votre score est de " + score + " sur " + nombreQuestion);
+    let spanScore = document.querySelector(".zoneScore span");
+    spanScore = score
+
+    let span =`
+        Votre score :<span>${spanScore} / ${nombreQuestion}</span>
+        `
+    let divScore = document.querySelector(".zoneScore");
+    divScore.innerHTML = span; 
 }
