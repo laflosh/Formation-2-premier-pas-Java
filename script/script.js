@@ -1,91 +1,51 @@
+/*********************************************************************************
+ * 
+ * Ce fichier contient toutes les fonctions nécessaires au fonctionnement du jeu. 
+ * 
+ *********************************************************************************/
 
-const MODE_JEU_MOT = "m";
-const MODE_JEU_PHRASE = "p";
-const MODE_JEU_INCONNU = "i";
+/**
+ * Cette fonction lance le jeu. 
+ * Elle demande à l'utilisateur de choisir entre "mots" et "phrases" et lance la boucle de jeu correspondante
+ */
+let btnValide = document.getElementById("btnValiderMot");
+let inputEcriture = document.getElementById("inputEcriture");
 
-function lancerJeu(){
+function lancerJeu() {
+    // Initialisations
     let score = 0;
-    let modeJeu = choisirPhraseOuMots();
-
-    switch(modeJeu){
-        case MODE_JEU_MOT:
-            score = modeJeuMOTS();
-        break;
-
-        case MODE_JEU_PHRASE:
-            score = modeJeuPHRASES();
-        break;
-
-        default:
-            console.error("Mode de jeu inconnu " + modeJeu);
-    }
-
-    afficherResultat(score, nombreQuestions(modeJeu));
-}
-
-function nombreQuestions(modeJeu){
-    switch(modeJeu){
-        case MODE_JEU_MOT:
-            return listeMots.length;
-
-        case MODE_JEU_PHRASE:
-            return listePhrases.length;
-    }
-
-    return 0;
-}
-
-function modeJeuMOTS(){
-    return jeuTypeJacko("Entrez le mot", listeMots);
-}
-
-function modeJeuPHRASES(){
-    return jeuTypeJacko("Entrez la phrase", listePhrases);
-}
-
-function jeuTypeJacko(question, valeurs){
-    let score = 0;
-    let limite = valeurs.length;
-
-    for(i = 0; i <= limite -1; i++){
-
-        if(prompt(question + " (" + (i +1) + "/" + limite + ") : " + valeurs[i]) === valeurs[i]){
-            score++;
-            console.log("Bravo !");   
-        } else {
-            console.warn("Erreur de saisie");
-        }
-    }
-
-    return score;
-}
-
-function choisirPhraseOuMots(){
 
     let i = 0;
-    while(true){
 
-        let choix = prompt("Une liste de mots ou de phrase? Veuillez écrire 'mots' ou 'phrases'");
+    let btnValide = document.getElementById("btnValiderMot");
+    let inputEcriture = document.getElementById("inputEcriture");
 
-        switch(choix){
+    motsAfficher(listeMots[i]);
+    btnValide.addEventListener("click", () =>{
+        console.log(inputEcriture.value)
+        if(inputEcriture.value === listeMots[i]){
+            score ++;
+        }
+        i ++;
+        afficherResultat(score, i);
 
-            case "mots":
-                console.log("Vous avez choisi mots");
-                return MODE_JEU_MOT;
+        if(listeMots[i] === undefined){
+            motsAfficher("Le jeu est finis.");
+            btnValide.disabled = true;
 
-            case "phrases" :
-                console.log("Vous avez choisi phrases");
-                return MODE_JEU_PHRASE;
-
-            default :
-                console.warn("Attention, veuillez saisir mots ou phrases");
-                i++;
-                if(i > 1){
-                    return MODE_JEU_INCONNU
-                }
+        } else{
+            motsAfficher(listeMots[i]);
         }
 
-    }
+        afficherResultat(score, i);
+    });
+
+
+}
+
+function motsAfficher(proposition){
+    let divZoneProposition = document.querySelector(".zoneProposition");
+    divZoneProposition.innerText = proposition;
 }
 
 function afficherResultat(score, nombreQuestion){
