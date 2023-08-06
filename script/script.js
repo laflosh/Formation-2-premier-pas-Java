@@ -1,79 +1,93 @@
-let i = 0;
-let choix = "";
+
+const MODE_JEU_MOT = "m";
+const MODE_JEU_PHRASE = "p";
+const MODE_JEU_INCONNU = "i";
 
 function lancerJeu(){
-    choix = choisirPhraseOuMots();
     let score = 0;
-    let nombreQuestion = 0;
+    let modeJeu = choisirPhraseOuMots();
 
-    if (choix === "mots"){
-        score = lancerBoucleDeJeu(choix);
-        nombreQuestion = listeMots.length;
+    switch(modeJeu){
+        case MODE_JEU_MOT:
+            score = modeJeuMOTS();
+        break;
+
+        case MODE_JEU_PHRASE:
+            score = modeJeuPHRASES();
+        break;
+
+        default:
+            console.error("Mode de jeu inconnu " + modeJeu);
     }
 
-    else (choix === "phrases");{
-        score = lancerBoucleDeJeu(choix);
-        nombreQuestion = listePhrases.length;
+    afficherResultat(score, nombreQuestions(modeJeu));
+}
+
+function nombreQuestions(modeJeu){
+    switch(modeJeu){
+        case MODE_JEU_MOT:
+            return listeMots.length;
+
+        case MODE_JEU_PHRASE:
+            return listePhrases.length;
     }
 
-    afficherResultat(score,nombreQuestion);
-
+    return 0;
 }
 
-function lancerBoucleDeJeu(choix){
-    if (choix === "mots"){
-        while (i < 3){
-            let score = 0;
-           let motUtilisateur =  prompt("Entrez le mot :" + listeMots[i]);
-           
-           if(motUtilisateur === listeMots[i]){
-           score++;
-           
-           console.log("Bravo !");
-               
-           
-           } 
-           else {
-           console.log("Erreur de frappe");
-           
-           }
-           
-           i++;
-       }
-       return score
-   }
-   
-   else (choix === "phrases");{
-       while (i < 3){
-            let score = 0;
-            let motUtilisateur =  prompt("Entrez la phrase :" + listePhrases[i]);
-           
-           if(motUtilisateur === listePhrases[i]){
-           score++;
-           
-           console.log("Bravo !");
-               
-           
-           } 
-           else {
-            console.log("Erreur de frappe");
-           
-            }
-           
-       i++;
-       }
-   }
+function modeJeuMOTS(){
+    return jeuTypeJacko("Entrez le mot", listeMots);
 }
 
-function afficherResultat(score,nombreQuestion){
-    console.log("Votre score est de : "+score+" sur "+nombreQuestion);
+function modeJeuPHRASES(){
+    return jeuTypeJacko("Entrez la phrase", listePhrases);
+}
 
+function jeuTypeJacko(question, valeurs){
+    let score = 0;
+    let limite = valeurs.length;
+
+    for(i = 0; i <= limite -1; i++){
+
+        if(prompt(question + " (" + (i +1) + "/" + limite + ") : " + valeurs[i]) === valeurs[i]){
+            score++;
+            console.log("Bravo !");   
+        } else {
+            console.warn("Erreur de saisie");
+        }
+    }
+
+    return score;
 }
 
 function choisirPhraseOuMots(){
-    while (choix !== "mots" && choix !=="phrases"){
-        choix = prompt("Une liste de mots ou de phrase? Veuillez écrire 'mots' ou 'phrases'");
-    }    
-    
-    return choix
+
+    let i = 0;
+    while(true){
+
+        let choix = prompt("Une liste de mots ou de phrase? Veuillez écrire 'mots' ou 'phrases'");
+
+        switch(choix){
+
+            case "mots":
+                console.log("Vous avez choisi mots");
+                return MODE_JEU_MOT;
+
+            case "phrases" :
+                console.log("Vous avez choisi phrases");
+                return MODE_JEU_PHRASE;
+
+            default :
+                console.warn("Attention, veuillez saisir mots ou phrases");
+                i++;
+                if(i > 1){
+                    return MODE_JEU_INCONNU
+                }
+        }
+
+    }
+}
+
+function afficherResultat(score, nombreQuestion){
+    console.log("Votre score est de " + score + " sur " + nombreQuestion);
 }
